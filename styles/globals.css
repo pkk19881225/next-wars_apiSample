@@ -21,9 +21,13 @@ a {
 }
 
 #people-endpoint {
-  transform: translateX(-1000px);
+  transform: translateX(-2000px);
 }
 
 #planets-endpoint {
+  transform: translateX(-1000px);
+}
+
+#starships-endpoint {
   transform: translateX(1000px);
 }

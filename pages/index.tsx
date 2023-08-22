@@ -17,6 +17,12 @@ export default function Home() {
       delay: 0.5,
       ease: 'Bounce.easeOut',
     })
+    gsap.to('#starships-endpoint', {
+      x: 0,
+      duration: 1.5,
+      delay: 0.5,
+      ease: 'Bounce.easeOut',
+    })
   }, [])
 
   return (
@@ -44,6 +50,14 @@ export default function Home() {
             className='text-white w-full shadow-lg bg-blue-600 px-1 py-3 sm:px-8 rounded tracking-wider'
           >
             PLANETS ENDPOINT
+          </button>
+        </Link>
+        <Link href='/starships' passHref>
+          <button
+            id='starships-endpoint'
+            className='text-white w-full shadow-lg bg-blue-600 px-1 py-3 sm:px-8 rounded tracking-wider'
+          >
+            STARSHIPS ENDPOINT
           </button>
         </Link>
       </div>

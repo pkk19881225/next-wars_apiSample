@@ -3,13 +3,15 @@ import {
   PeopleResult,
   PeopleProps,
   PlanetProps,
+  StarshipProps,
+  StarshipResult
 } from './../interfaces/index'
 
 export const fetchData = async (page: string) => {
   const cache = await caches.open('swapi')
   await cache.add(new Request(page))
 
-  const data: PeopleProps | PlanetProps = await caches
+  const data: PeopleProps | PlanetProps | StarshipProps = await caches
     .match(page)
     .then((pageData) => pageData?.json())
 
@@ -74,6 +76,35 @@ export const getResidents = async (results: PlanetResult[]) => {
   }
 
   return planets
+}
+
+export const getPilots = async (results: StarshipResult[]) => {
+  const cache = await caches.open('pilots ')
+  const starships = [...results]
+
+  for (let i = 0; i < starships.length; i++) {
+    const starshipResult: StarshipResult[] = await Promise.all(
+      starships[i].pilots .map(async (pilots) => {
+        if (await cache.match(pilots)) {
+          return cache
+            .match(pilots)
+            .then((residentData) => residentData?.json())
+        }
+
+        await cache.add(pilots)
+        return await cache
+          .match(pilots)
+          .then((residentData) => residentData?.json())
+      })
+    )
+
+    starships[i].pilots.length = 0
+    for (const person of starshipResult) {
+      starships[i].pilots.push(person.name)
+    }
+  }
+
+  return starships
 }
 
 export const scrollToTop = () => {
